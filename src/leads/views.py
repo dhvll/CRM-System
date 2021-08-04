@@ -30,6 +30,25 @@ def lead_create(request):
     }
     return render(request, "leads/lead_create.html", context)
 
+def lead_update(request, pk):
+    lead = Lead.objects.get(id=pk)
+    form = LeadModelForm(instance=lead)
+    if request.method == 'POST':        
+        form = LeadModelForm(request.POST, instance=lead)
+        if form.is_valid():
+            form.save()
+            return redirect("/leads")
+    context = {
+        "lead": lead,
+        "form": form
+    }
+    return render(request, "leads/lead_update.html", context)
+
+def lead_delete(request, pk):
+    lead = Lead.objects.get(id=pk)
+    lead.delete()
+    return redirect("/leads")
+
 # def lead_update(request, pk):
     # lead = Lead.objects.get(id=pk)
     # form = LeadForm()
@@ -49,20 +68,6 @@ def lead_create(request):
     #     "form": form
     # }
     # return render(request, "leads/lead_update.html", context)
-
-def lead_update(request, pk):
-    lead = Lead.objects.get(id=pk)
-    form = LeadModelForm(instance=lead)
-    if request.method == 'POST':        
-        form = LeadModelForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("/leads")
-    context = {
-        "lead": lead,
-        "form": form
-    }
-    return render(request, "leads/lead_update.html", context)
 
 
 # Model form saves a lot of code. 
