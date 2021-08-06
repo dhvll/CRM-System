@@ -1,3 +1,4 @@
+import datetime
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin 
@@ -17,6 +18,39 @@ class SignupView(generic.CreateView):
 
 class LandingPageView(generic.TemplateView):
     template_name = "landing.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("dashboard")
+        return super().dispatch(request, *args, **kwargs)
+
+class DashboardView(OrganizerAndLoginRequiredMixin, generic.TemplateView):
+    template_name = "dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+        user = self.request.user
+        total_lead_count = Lead.objects.filter(organization=user.userprofile).count()
+        thirty_days_ago = datetime.date.today() - datetime.timedelta(days=30)
+
+        total_in_past30 = Lead.objects.filter(
+            organization=user.userprofile,
+            date_added__gte=thirty_days_ago
+        ).count()
+
+        converted_category = Category.objects.get(name="Converted")
+        converted_in_past30 = Lead.objects.filter(
+            organization=user.userprofile,
+            category=converted_category,
+            converted_date__gte=thirty_days_ago
+        ).count()
+
+        context.update({
+            "total_lead_count": total_lead_count,
+            "total_in_past30": total_in_past30,
+            "converted_in_past30": converted_in_past30
+        })
+        return context
 
 # def landing_page(request):
 #     return render(request, "landing.html")
