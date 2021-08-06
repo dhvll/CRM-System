@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     'leads',
     'agents',
+
+    'crispy_forms',
+    "crispy_tailwind",
 ]
 
 MIDDLEWARE = [
@@ -53,6 +56,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'djcrm.urls'
+
+CRISPY_TEMPLATE_PACK = 'tailwind'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
 TEMPLATES = [
     {
