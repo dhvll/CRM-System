@@ -26,16 +26,21 @@ class Lead(models.Model):
     last_name = models.CharField(max_length=20)
     age = models.IntegerField(default=0)
     organization = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    agent = models.ForeignKey(
-        "Agent", null=True, blank=True, on_delete=models.SET_NULL)
+    agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)
     category = models.ForeignKey(
-        "Category", related_name="leads", null=True, blank=True, on_delete=models.SET_NULL)
-    description = models.TextField()
-    date_added = models.DateTimeField(auto_now_add=True)
-    phone_number = models.CharField(max_length=20)
-    email = models.EmailField()
+        "Category",
+        related_name="leads",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    description = models.TextField(null=True, blank=True)
+    date_added = models.DateTimeField(null=True, auto_now_add=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
     profile_picture = models.ImageField(
-        null=True, blank=True, upload_to="profile_pictures/")
+        null=True, blank=True, upload_to="profile_pictures/"
+    )
     converted_date = models.DateTimeField(null=True, blank=True)
 
     objects = LeadManager()
@@ -49,12 +54,10 @@ def handle_upload_follow_ups(instance, filename):
 
 
 class FollowUp(models.Model):
-    lead = models.ForeignKey(
-        Lead, related_name="followups", on_delete=models.CASCADE)
+    lead = models.ForeignKey(Lead, related_name="followups", on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(blank=True, null=True)
-    file = models.FileField(null=True, blank=True,
-                            upload_to=handle_upload_follow_ups)
+    file = models.FileField(null=True, blank=True, upload_to=handle_upload_follow_ups)
 
     def __str__(self):
         return f"{self.lead.first_name} {self.lead.last_name}"

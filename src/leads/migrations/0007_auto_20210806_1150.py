@@ -7,21 +7,25 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('leads', '0006_auto_20210806_1143'),
+        ("leads", "0006_auto_20210806_1143"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='lead',
-            name='category',
+            model_name="lead",
+            name="category",
         ),
         migrations.AddField(
-            model_name='agent',
-            name='organization',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='leads.userprofile'),
+            model_name="agent",
+            name="organization",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="leads.userprofile",
+            ),
             preserve_default=False,
         ),
         migrations.DeleteModel(
-            name='Category',
+            name="Category",
         ),
     ]
