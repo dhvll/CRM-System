@@ -1,4 +1,5 @@
 # CRM-System
+
 This is Customer relationship management system which helps users to manage relationships and interactions with the customer and assign them to agents efficiently
 
 ## Technologies
@@ -46,7 +47,21 @@ This is Customer relationship management system which helps users to manage rela
    ```shell
    $ python manage.py runserver
    ```
-   
+
+## Screenshots
+
+- Dashbord
+  ![Dashbord](images/dashboard.png)
+
+- Leads
+  ![Leads](images/leads.png)
+
+- Profile
+  ![Profile](images/profile.png)
+
+- Agents
+  ![Agents](images/agents.png)
+
 ## Authors
 
 - Dhaval Chaudhari - [dhavall13](https://github.com/dhavall13/)
