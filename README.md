@@ -1,9 +1,6 @@
 # CRM-System
 This is Customer relationship management system which helps users to manage relationships and interactions with the customer and assign them to agents efficiently
 
-## Live Application 
-https://based-crm.herokuapp.com/
-
 ## Technologies
 
 - Python
